@@ -9,6 +9,7 @@ import org.apache.solr.client.solrj.response.QueryResponse
 import org.apache.solr.client.solrj.{ResponseParser, StreamingResponseCallback}
 import org.apache.solr.common.params.{CommonParams, ModifiableSolrParams, SolrParams}
 import org.asynchttpclient.AsyncHandler.State
+import io.netty.handler.codec.http.HttpHeaders
 
 import scala.concurrent._
 import scala.util.{Success, Failure}
@@ -83,7 +84,7 @@ class AsyncQueryBuilder(httpClient: AsyncHttpClient, url: String, protected val 
         }
       }
 
-      override def onHeadersReceived(headers: HttpResponseHeaders): State = State.CONTINUE
+      override def onHeadersReceived(headers: HttpHeaders): State = State.CONTINUE
 
       override def onBodyPartReceived(bodyPart: HttpResponseBodyPart): State = {
         updInputStream appendBytes bodyPart.getBodyPartBytes
